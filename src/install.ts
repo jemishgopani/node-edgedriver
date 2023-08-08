@@ -77,7 +77,7 @@ async function fetchVersion (edgeVersion: string) {
 
   const uniqueVersions = [...new Set(versions.map((v) => v.version))]
   const versionsSorted = uniqueVersions.sort((a, b) => a.localeCompare(b, undefined, { numeric:true })).reverse().map((v) => versions.filter((vv) => vv.version === v)).flat()
-  const desiredVersion = versionsSorted.find((v) => v.version === edgeVersion && findByArchitecture(v.name))
+  const desiredVersion = versionsSorted.find((v) => v.version <= edgeVersion && findByArchitecture(v.name))
   if (!desiredVersion) {
     throw new Error(`No version "${edgeVersion}" found, latest versions available are ${versionsSorted.map((v) => v.version).slice(0, 10).join(', ')}`)
   }
